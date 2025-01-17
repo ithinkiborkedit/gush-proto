@@ -6,12 +6,12 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-type protoBufCodec struct {
+type bufCodec struct {
 	w io.Writer
 	r io.Reader
 }
 
-type ProtoRW interface {
+type Encoder interface {
 	ProtoBufEncode
 	ProtoBufDecode
 }
@@ -24,14 +24,14 @@ type ProtoBufDecode interface {
 	Decode(msg proto.Message) error
 }
 
-func NewProtoRW(r io.Reader, w io.Writer) ProtoRW {
-	return &protoBufCodec{w: w, r: r}
+func NewProtoRW(r io.Reader, w io.Writer) Encoder {
+	return &bufCodec{w: w, r: r}
 }
 
-func (rw *protoBufCodec) Encode(msg proto.Message) error {
+func (rw *bufCodec) Encode(msg proto.Message) error {
 	return WriteProto(rw.w, msg)
 }
 
-func (rw *protoBufCodec) Decode(msg proto.Message) error {
+func (rw *bufCodec) Decode(msg proto.Message) error {
 	return ReadProto(rw.r, msg)
 }
