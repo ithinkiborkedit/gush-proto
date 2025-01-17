@@ -1,4 +1,4 @@
-module github.com/ithinkiborkedit/gush-proto/gushproto
+module github.com/ithinkiborkedit/gush-proto
 
 go 1.23.1
 
